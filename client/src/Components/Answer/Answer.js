@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "../../context/Usercontext";
+import "./Answer.css"
 
 import profile from "../../Resources/images/Default_pfp.jpg";
 
@@ -10,13 +11,15 @@ function Answer() {
   // console.log(userData)
 
   const [question, setQuestion] = useState();
+  const [answers, setAnswers] = useState();
+
+  var [counter, setCounter] = useState(1);
 
   const navigate = useNavigate();
 
-  // question id from home page
+  // Question id from home page
   const { id } = useParams();
-  // console.log(id)
-
+  // console.log("question id " + id)
 
   // To get form data
   const [form, setForm] = useState({});
@@ -26,28 +29,7 @@ function Answer() {
     // console.log(form.description);
   };
 
-  // Axios to store answers
-  useEffect(() => {
-    const handleSubmit = async () => {
-      // get question by id
-      try {
-        const questionAsk = await axios.get(
-          `http://localhost:3001/api/question/${id}`
-        );
-
-        setQuestion(questionAsk?.data.data);
-
-        // navigate("/home");
-      } catch (err) {
-        console.log("problem", err);
-        // alert(err.response.data.msg);
-      }
-    };
-    handleSubmit();
-  }, []);
-  // console.log(question)
-
-  // Axios to give answer
+  // Axios to insert answer to answer table
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -55,49 +37,104 @@ function Answer() {
         "http://localhost:3001/api/answer/",
         {
           answer: form.description,
-          questionId: id ,
-          // answerCodeBlock: "first",
+          questionId: id,
           id: userData.user.id,
-
-          // answer: "first",
           answerCodeBlock: "first",
-          // questionId: "13",
-          // id: "23",
         }
       );
 
-      navigate("/home");
+      setCounter((value) => {
+         return ++value
+      })
+
+      // navigate("/home");
     } catch (err) {
       console.log("problem", err);
       alert(err.response.data.msg);
     }
   };
 
+  // Axios to get question by id
+  useEffect(() => {
+    const getQuestion = async () => {
+      try {
+        const questionAsk = await axios?.get(
+          `http://localhost:3001/api/question/${id}`
+        );
+
+        setQuestion(questionAsk?.data.data);
+
+      } catch (err) {
+        console.log("problem", err);
+        // console.log(err.response.data.msg);
+      }
+    };
+    getQuestion();
+  }, []);
+
+
+  // console.log(question)
+
+
+  // Axios to get answers by id
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const questionRes = await axios?.get(
+          `http://localhost:3001/api/answer/${id}`
+        );
+        setAnswers(questionRes?.data.data);
+        // console.log(loginRes.data.question);
+      } catch (err) {
+        console.log("problem", err);
+        // alert(err.response.data.msg);
+      }
+    };
+    getData();
+    console.log(answers);
+  }, [counter]);
+
   return (
     <div>
-      <div className="col-sm-9 col-md-8 col-lg-8 mx-auto mt-5 ">
-        <h5 className="card-title fw-light fs-5 first-join fw-bold">
-          Question <br />
+      <div className="col-sm-9 col-md-8 col-lg-8 mx-auto mt-5  ">
+        <div className="home-welcome flexx">
+          <div className="col-9">Welcome:</div>
+          <div>{userData?.user?.display_name}
           <br />
-          <b>{question?.question} ?</b>
-        </h5>
+          <Link to={"/home"}>back to home page</Link>
+          </div>
+        </div>
+        <div className="card-title fw-light fs-5 first-join fw-bold">
+          <u>Question </u>
+          <br />
+          <br />
+          <h3>{question?.question} ?</h3>
+          <h6>{question?.question_description}</h6>
+        </div>
 
         {/* Main question list wraper  */}
-        <div className="question-outer-wraper">
-          <hr />
-          <h4>Answer From The Community</h4>
-        </div>
-        <div className="question-outer-wraper">
-          <hr />
-          <div className="question-main-wraper  row">
-            <div className="question-inner-wrapper col-1 ">
-              <img className="profile" src={profile} alt="pic" />
-              <p className="name">Misrak</p>
-            </div>
+        <div className="hid">
+          <div className="question-outer-wraper">
+            <hr />
+            <h4>Answer From The Community</h4>
+          </div>
+          <div className="question-outer-wraper">
+            <hr />
 
-            <div className="question-inner-wrapper2 py-5 col-9">
-              {question?.question_description}
-            </div>
+            {answers?.map((singleAnswer, i) => {
+              return (
+                <div className="question-main-wraper  row" key={i}>
+                  <div className="question-inner-wrapper col-1 ">
+                    <img className="profile" src={profile} alt="pic" />
+                    <p className="name">{singleAnswer?.user_name}</p>
+                  </div>
+                  <div className="question-inner-wrapper2 py-5 mx-5 px-5 col-9">
+                    {singleAnswer.answer}
+                  </div>
+                  <hr />
+                </div>
+              );
+            })}
 
             {/* Answer giving section  */}
             <section className="ask container row col-12 mb-5">

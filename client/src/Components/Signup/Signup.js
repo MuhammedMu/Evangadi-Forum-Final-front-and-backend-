@@ -61,12 +61,14 @@ function Signup() {
                     Join the network
                   </h5>
 
-                  <h6 className="card-title text-center mb-3 fw-light  ">
-                    Already have an account?
-                    <span className="create-link">Sign in</span>
-                  </h6>
+                  <Link to={"/"}>
+                    <h6 className="card-title text-center mb-3 fw-light  ">
+                      Already have an account?
+                      <span className="create-link">Sign in</span>
+                    </h6>
+                  </Link>
 
-                  {/* <form onSubmit={handleSubmit}>
+                  <form onSubmit={handleSubmit}>
                     <div className="form-floating mb-3">
                       <input
                         type="email"
@@ -82,7 +84,7 @@ function Signup() {
                       <div className="form-floating mb-3">
                         <input
                           type="text"
-                          name="first"
+                          name="firstName"
                           className="form-control"
                           id="floatingPassword"
                           placeholder="Password"
@@ -93,7 +95,7 @@ function Signup() {
                       <div className="form-floating mb-3 second">
                         <input
                           type="text"
-                          name="second"
+                          name="lastName"
                           className="form-control"
                           id="floatingPassword"
                           placeholder="Password"
@@ -105,7 +107,7 @@ function Signup() {
                     <div className="form-floating mb-3">
                       <input
                         type="text"
-                        name="user"
+                        name="userName"
                         className="form-control"
                         id="floatingInput"
                         placeholder="name@example.com"
@@ -148,51 +150,8 @@ function Signup() {
                         </span>
                       </label>
                     </div>
-                  </form> */}
-
-                  <form onSubmit={handleSubmit}>
-                    <input
-                      className="in11 mr-1"
-                      name="email"
-                      onChange={handleChange}
-                      type="email"
-                      placeholder="Email"
-                    />
-                    <div className="FLname d-flex">
-                      <input
-                        className="in11 me-1"
-                        name="firstName"
-                        onChange={handleChange}
-                        type="text"
-                        placeholder="First Name"
-                      />
-
-                      <input
-                        className="in11 ms-1"
-                        name="lastName"
-                        onChange={handleChange}
-                        type="text"
-                        placeholder="Last Name"
-                      />
-                    </div>
-
-                    <input
-                      className="in11"
-                      name="userName"
-                      onChange={handleChange}
-                      type="text"
-                      placeholder="User Name"
-                    />
-
-                    <input
-                      className="in11"
-                      onChange={handleChange}
-                      name="password"
-                      type="password"
-                      placeholder="Password"
-                    />
-                    <button className="btnSign">Agree and Join</button>
                   </form>
+
                 </div>
               </div>
             </div>

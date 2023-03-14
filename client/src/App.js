@@ -1,7 +1,6 @@
 import "./App.css";
 import "./Resources/style.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import LandingPage from "./Components/LandingPage/LandingPage";
 import Header from "./Components/Header/Header";
 import AskQuestion from "./Components/AskQuestion/AskQuestion";
 import Footer from "./Components/Footer/Footer";
@@ -25,7 +24,7 @@ function App() {
       token = "";
     } else {
       //if token exist in localstorage then use auth to verify token and get user info
-      const userRes = await axios.get("http://localhost:3001/api/users", {
+      const userRes = await axios?.get("http://localhost:3001/api/users", {
         headers: { "x-auth-token": token },
       });
 
@@ -33,8 +32,8 @@ function App() {
       setUserData({
         token,
         user: {
-          id: userRes.data.data.user_id,
-          display_name: userRes.data.data.user_name,
+          id: userRes?.data.data.user_id,
+          display_name: userRes?.data.data.user_name,
         },
       });
     }

@@ -4,6 +4,7 @@ import profile from "../../Resources/images/Default_pfp.jpg";
 import { UserContext } from "../../context/Usercontext";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+
 function Home() {
   const [userData, setUserData] = useContext(UserContext);
   // console.log( userData.user?.display_name )
@@ -13,9 +14,12 @@ function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Axios to get all questions
     const getData = async () => {
       try {
-        const questionRes = await axios.get("http://localhost:3001/api/question/");
+        const questionRes = await axios?.get(
+          "http://localhost:3001/api/question/"
+        );
         setQuestion(questionRes.data.data);
         // console.log(loginRes.data.question);
       } catch (err) {
@@ -25,7 +29,6 @@ function Home() {
     };
 
     getData();
-    
   }, []);
 
   // console.log(question);
@@ -45,7 +48,7 @@ function Home() {
             </Link>
           </div>
           <div className="home-welcome">
-            Welcome: {userData.user?.display_name}
+            Welcome: {userData?.user?.display_name}
           </div>
         </div>
         <h5 className="card-title fw-light fs-5 first-join fw-bold">
@@ -53,14 +56,14 @@ function Home() {
         </h5>
 
         {/* Main question list wraper  */}
-        {question?.map((singleQuestion, i) => {
+        {question?.map((singleQuestion,i) => {
           // sending question id to answer page
           var unique = singleQuestion.question_id.toString();
           // console.log(unique);
 
           return (
-            <Link to={unique}>
-              <div className="question-outer-wraper" key={i}>
+            <Link to={unique} key={i}>
+              <div className="question-outer-wraper" >
                 <hr />
                 <div className="question-main-wraper  row">
                   <div className="question-inner-wrapper col-1 ">
@@ -68,8 +71,8 @@ function Home() {
                     <p className="name">{singleQuestion.user_name}</p>
                   </div>
 
-                  <div className="question-inner-wrapper2 mx-5 py-5 col-7">
-                    {singleQuestion.question} <br />
+                  <div className="question-inner-wrapper2 mx-5 px-5 py-4 col-7">
+                    {singleQuestion.question} ?<br />
                     {singleQuestion.question_description}
                   </div>
 
