@@ -61,12 +61,12 @@ function Signup() {
                     Join the network
                   </h5>
 
-                  <Link to={"/"}>
                     <h6 className="card-title text-center mb-3 fw-light  ">
                       Already have an account?
+                  <Link to={"/"}>
                       <span className="create-link">Sign in</span>
-                    </h6>
                   </Link>
+                    </h6>
 
                   <form onSubmit={handleSubmit}>
                     <div className="form-floating mb-3">

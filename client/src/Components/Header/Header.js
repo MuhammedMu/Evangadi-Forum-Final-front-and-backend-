@@ -6,26 +6,22 @@ function Header({ logout }) {
   const navigate = useNavigate();
 
   const [userData, setUserData] = useContext(UserContext);
+  // console.log(userData.token)
+  // useEffect(() => {
+  //   if (!userData) {
+  //     // console.log(userData);
+  //     // if there is data
+  //     // console.log(userData);
+  //     var element = document.getElementById("login");
+  //     element.classList.add("hide");
+  //    }
+  //   else {
+  //     // console.log(userData);
+  //     var element = document.getElementById("create");
+  //     element.classList.add("hide");
 
-  useEffect(() => {
-    if (userData) {
-      // console.log(userData);
-      // if there is data
-      // console.log(userData);
-      var element = document.getElementById("login");
-      element.classList.remove("hide");
-
-      var element = document.getElementById("logout");
-      element.classList.add("hide");
-    } else {
-      console.log(userData);
-      var element = document.getElementById("login");
-      element.classList.add("hide");
-
-      var element = document.getElementById("create");
-      element.classList.remove("hide");
-    }
-  }, []);
+  //   }
+  // }, []);
 
   return (
     <div>
@@ -62,23 +58,27 @@ function Header({ logout }) {
                   </a>
                 </li>
                 <li className="nav-item">
-                  <button
-                    className="btn btn-outline-success signin-button"
-                    type="submit"
-                    id="login"
-                    // onClick={toLoginPage}
-                  >
-                    SIGN IN
-                  </button>
+                  <div className={userData.token ? "hide" : null}>
+                    <button
+                      className="btn btn-outline-success signin-button"
+                      type="submit"
+                      id="login"
+                      // onClick={toLoginPage}
+                    >
+                      SIGN IN
+                    </button>
+                  </div>
 
-                  <button
-                    className="btn btn-outline-success signin-button "
-                    type="submit"
-                    id="logout"
-                    onClick={logout}
-                  >
-                    Logout
-                  </button>
+                  <div className={userData.token ? null : "hide"}>
+                    <button
+                      className="btn btn-outline-success signin-button "
+                      type="submit"
+                      id="logout"
+                      onClick={logout}
+                    >
+                      Logout
+                    </button>
+                  </div>
                 </li>
               </ul>
             </div>

@@ -40,7 +40,7 @@ function Login() {
     }
   };
   useEffect(() => {
-    if (userData.user) navigate("/");
+    if (userData.user) navigate("/home");
   }, [userData.user, navigate]);
 
   const [type, setType] = useState("password");
@@ -58,12 +58,12 @@ function Login() {
                   <h5 className="card-title text-center fw-light fs-5 first-join fw-bold mb-4 mt-5 pt-2">
                     Login to your account
                   </h5>
-                  <Link to={"/signup"}>
                     <h6 className="card-title text-center mb-3 fw-light  ">
                       Don't have an account?
-                      <span className="create-link">Create an account ? </span>
-                    </h6>
+                  <Link to={"/signup"}>
+                      <span className="create-link"> Create an account ? </span>
                   </Link>
+                    </h6>
                   <form onSubmit={handleSubmit}>
                     <div className="form-floating mb-3">
                       <input
@@ -99,7 +99,9 @@ function Login() {
                       <div className="form-check mb-3 text-center">
                         <label className="forget-password mt-3">
                           <span className="create-link">
-                            Create an account ?
+                            <Link to={"/signup"}>
+                              Create an account ?
+                              </Link>
                           </span>
                         </label>
                       </div>

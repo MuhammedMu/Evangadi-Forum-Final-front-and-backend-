@@ -1,6 +1,6 @@
 import "./App.css";
 import "./Resources/style.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import Header from "./Components/Header/Header";
 import AskQuestion from "./Components/AskQuestion/AskQuestion";
 import Footer from "./Components/Footer/Footer";
@@ -14,6 +14,7 @@ import Signup from "./Components/Signup/Signup";
 
 function App() {
   const [userData, setUserData] = useContext(UserContext);
+
 
   const checkLoggedin = async () => {
     //check if the token already exist in local storage
@@ -45,6 +46,7 @@ function App() {
       user: undefined,
     });
     localStorage.setItem("auth-token", "");
+    window.location.href = "/"; 
   };
 
   useEffect(() => {
@@ -59,7 +61,7 @@ function App() {
             path="/"
             element={
               <>
-                <Header />
+                <Header logout={logout} />
                 <Login />
               </>
             }
@@ -68,7 +70,7 @@ function App() {
             path="/ask"
             element={
               <>
-                <Header />
+                <Header logout={logout} />
                 <AskQuestion />
               </>
             }
@@ -78,9 +80,9 @@ function App() {
             path="/home"
             element={
               <>
-                <Header />
+                <Header logout={logout} />
                 {/* <Home /> */}
-                <Home logout={logout} />
+                <Home />
               </>
             }
           />
@@ -89,7 +91,7 @@ function App() {
             path="/answer"
             element={
               <>
-                <Header />
+                <Header logout={logout} />
                 <Answer />
               </>
             }
@@ -99,7 +101,7 @@ function App() {
             path="/home/:id"
             element={
               <>
-                <Header />
+                <Header logout={logout} />
                 <Answer />
               </>
             }
@@ -109,7 +111,7 @@ function App() {
             path="/signup"
             element={
               <>
-                <Header />
+                <Header logout={logout} />
                 <Signup />
               </>
             }
