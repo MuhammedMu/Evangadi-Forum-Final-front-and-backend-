@@ -11,15 +11,16 @@ function Signup() {
 
   // To get form data
   const [form, setForm] = useState({});
-
+  // To track change in form fields 
   const handleChange = (e) => {
       setForm({ ...form, [e.target.name]: e.target.value });
     //   console.log(form.user)
   };
 
-  // Axios to login
+  // Axios to signup
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Creating new user
     try {
       const signupRes = await axios.post("http://localhost:3001/api/users", {
         email: form.email,
@@ -28,23 +29,41 @@ function Signup() {
         lastName: form.lastName,
         userName: form.userName,
       });
-        
-        
+
       setUserData({
         token: signupRes.data.token,
         user: signupRes.data.user,
       });
 
       localStorage.setItem("auth-token", signupRes.data.token);
-      navigate("/");
+      // navigate("/");
+    } catch (err) {
+      console.log("problem", err);
+      alert(err.response.data.msg);
+    }
+
+    // Logging user after finishing to create user
+    try {
+      const loginRes = await axios.post(
+        "http://localhost:3001/api/users/login",
+        {
+          email: form.email,
+          password: form.password,
+        }
+      );
+      setUserData({
+        token: loginRes.data.token,
+        user: loginRes.data.user,
+      });
+
+      localStorage.setItem("auth-token", loginRes.data.token);
+      navigate("/home");
     } catch (err) {
       console.log("problem", err);
       alert(err.response.data.msg);
     }
   };
-//   useEffect(() => {
-//     if (userData.user) navigate("/");
-//   }, [userData.user, navigate]);
+
 
 
   return (

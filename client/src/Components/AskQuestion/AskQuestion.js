@@ -5,19 +5,18 @@ import { UserContext } from '../../context/Usercontext';
 import "./AskQuestion.css"
 
 function AskQuestion() {
-  
   const [userData, setUserData] = useContext(UserContext);
-  
+
   const navigate = useNavigate();
-  
-  // To get form data 
+
+  // To get form data
   const [form, setForm] = useState({});
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // Axios to store asked question  
+  // Axios to store asked question
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -31,13 +30,18 @@ function AskQuestion() {
           tags: "hello",
         }
       );
-      
+
       navigate("/home");
     } catch (err) {
       console.log("problem", err);
       alert(err.response.data.msg);
     }
   };
+
+  // use effect not to access ask page when isn't login
+  useEffect(() => {
+    if (!userData.user) navigate("/");
+  }, [userData.user]);
 
   return (
     <div>
@@ -66,8 +70,8 @@ function AskQuestion() {
                 className="form-control"
                 rows={2}
                 placeholder="Title"
-                 name="title"
-                      onChange={handleChange}
+                name="title"
+                onChange={handleChange}
               />
             </div>
             <br />
@@ -76,19 +80,16 @@ function AskQuestion() {
                 className="form-control"
                 rows={3}
                 placeholder="Question Description..."
-                 name="description"
-                      onChange={handleChange}
+                name="description"
+                onChange={handleChange}
               />
             </div>
             <div className="d-grid">
-              <button
-                className="btn btn-primary btn-login post-question-button col-sm-2 col-md-4 my-3"
-              >
+              <button className="btn btn-primary btn-login post-question-button col-sm-2 col-md-4 my-3">
                 Post your question
               </button>
             </div>
           </form>
-
         </div>
       </section>
     </div>

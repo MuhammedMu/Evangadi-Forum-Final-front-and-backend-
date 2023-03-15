@@ -11,14 +11,15 @@ function Login() {
 
   // To get form data
   const [form, setForm] = useState({});
-
+  // To track change in form fields
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // Axios to login 
+  // Axios to login
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Logging user 
     try {
       const loginRes = await axios.post(
         "http://localhost:3001/api/users/login",
@@ -27,6 +28,7 @@ function Login() {
           password: form.password,
         }
       );
+      
       setUserData({
         token: loginRes.data.token,
         user: loginRes.data.user,
@@ -39,12 +41,7 @@ function Login() {
       alert(err.response.data.msg);
     }
   };
-  useEffect(() => {
-    if (userData.user) navigate("/home");
-  }, [userData.user, navigate]);
-
-  const [type, setType] = useState("password");
-
+  
   return (
     <div className="landing">
       {/* Login Section  */}
@@ -58,12 +55,12 @@ function Login() {
                   <h5 className="card-title text-center fw-light fs-5 first-join fw-bold mb-4 mt-5 pt-2">
                     Login to your account
                   </h5>
-                    <h6 className="card-title text-center mb-3 fw-light  ">
-                      Don't have an account?
-                  <Link to={"/signup"}>
+                  <h6 className="card-title text-center mb-3 fw-light  ">
+                    Don't have an account?
+                    <Link to={"/signup"}>
                       <span className="create-link"> Create an account ? </span>
-                  </Link>
-                    </h6>
+                    </Link>
+                  </h6>
                   <form onSubmit={handleSubmit}>
                     <div className="form-floating mb-3">
                       <input
@@ -99,32 +96,12 @@ function Login() {
                       <div className="form-check mb-3 text-center">
                         <label className="forget-password mt-3">
                           <span className="create-link">
-                            <Link to={"/signup"}>
-                              Create an account ?
-                              </Link>
+                            <Link to={"/signup"}>Create an account ?</Link>
                           </span>
                         </label>
                       </div>
                     </div>
                   </form>
-
-                  {/* <form onSubmit={handleSubmit}>
-                    <input
-                      className="in1"
-                      type="email"
-                      name="email"
-                      onChange={handleChange}
-                      placeholder="Your Email"
-                    />
-                    <input
-                      className="in1"
-                      type={type}
-                      name="password"
-                      onChange={handleChange}
-                      placeholder="Your Password"
-                    />
-                    <button className="btn1">submit</button>
-                  </form> */}
                 </div>
               </div>
             </div>

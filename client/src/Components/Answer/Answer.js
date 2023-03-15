@@ -44,8 +44,8 @@ function Answer() {
       );
 
       setCounter((value) => {
-         return ++value
-      })
+        return ++value;
+      });
 
       // navigate("/home");
     } catch (err) {
@@ -63,7 +63,6 @@ function Answer() {
         );
 
         setQuestion(questionAsk?.data.data);
-
       } catch (err) {
         console.log("problem", err);
         // console.log(err.response.data.msg);
@@ -72,9 +71,7 @@ function Answer() {
     getQuestion();
   }, []);
 
-
   // console.log(question)
-
 
   // Axios to get answers by id
   useEffect(() => {
@@ -94,14 +91,20 @@ function Answer() {
     console.log(answers);
   }, [counter]);
 
+  // use effect not to access answer page when isn't login
+  useEffect(() => {
+    if (!userData.user) navigate("/");
+  }, [userData.user]);
+
   return (
     <div>
       <div className="col-sm-9 col-md-8 col-lg-8 mx-auto mt-5  ">
         <div className="home-welcome flexx">
           <div className="col-9">Welcome:</div>
-          <div>{userData?.user?.display_name}
-          <br />
-          <Link to={"/home"}>back to home page</Link>
+          <div>
+            {userData?.user?.display_name}
+            <br />
+            <Link to={"/home"}>back to home page</Link>
           </div>
         </div>
         <div className="card-title fw-light fs-5 first-join fw-bold">

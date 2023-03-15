@@ -33,6 +33,11 @@ function Home() {
 
   // console.log(question);
 
+  // use effect not to access home page when isn't login
+  useEffect(() => {
+    if (userData.user) navigate("/home");
+  }, [userData.user, navigate]);
+
   return (
     <div>
       <div className="col-sm-9 col-md-8 col-lg-8 mx-auto ">
@@ -56,14 +61,14 @@ function Home() {
         </h5>
 
         {/* Main question list wraper  */}
-        {question?.map((singleQuestion,i) => {
+        {question?.map((singleQuestion, i) => {
           // sending question id to answer page
           var unique = singleQuestion.question_id.toString();
           // console.log(unique);
 
           return (
             <Link to={unique} key={i}>
-              <div className="question-outer-wraper" >
+              <div className="question-outer-wraper">
                 <hr />
                 <div className="question-main-wraper  row">
                   <div className="question-inner-wrapper col-1 ">

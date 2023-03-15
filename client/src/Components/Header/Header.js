@@ -23,6 +23,11 @@ function Header({ logout }) {
   //   }
   // }, []);
 
+  const toLoginPage = () => {
+    window.href="/"
+  }
+
+
   return (
     <div>
       <section>
@@ -63,7 +68,7 @@ function Header({ logout }) {
                       className="btn btn-outline-success signin-button"
                       type="submit"
                       id="login"
-                      // onClick={toLoginPage}
+                      onClick={toLoginPage}
                     >
                       SIGN IN
                     </button>
